@@ -1,0 +1,37 @@
+# .gitignore 配置示例
+
+# 忽略整个 .idea 目录，但保留必要的共享配置
+.idea/*
+!.idea/.name
+!.idea/modules.xml
+!.idea/misc.xml
+!.idea/encodings.xml
+!.idea/compiler.xml
+!.idea/vcs.xml
+!.idea/codeStyles/
+
+# 但忽略其中的缓存文件和个人设置
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/shelf/
+.idea/datasources.xml
+.idea/dataSources.ids
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+.idea/libraries/
+
+# Maven 忽略规则
+target/
+pom.xml.asc
+pom.xml.releaseBackup
+release.properties
+dependency-reduced-pom.xml
+
+# 其他通用忽略
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
