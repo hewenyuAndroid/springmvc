@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <!-- 配置 SpringMVC的前端控制器，对浏览器发送的请求进行统一处理 -->
+    <servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+        <!--
+            配置 spring mvc 配置文件的位置和名称
+        -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:springmvc.xml</param-value>
+        </init-param>
+
+        <!-- 将前端控制器 DispatcherServlet 的初始化时间提前到服务器启动时 -->
+        <load-on-startup>1</load-on-startup>
+
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <!--
+            /: 表示除了 .jsp 结尾的所有请求路径都可以匹配上 (jsp底层本质上就是一个 servlet，如果是 jsp 的请求，则应交给它自己处理)
+            /*: 表示所有的请求路径
+        -->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+</web-app>

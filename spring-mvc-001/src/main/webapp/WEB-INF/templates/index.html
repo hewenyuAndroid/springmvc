@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+
+<h1>首页</h1>
+
+<!--
+    href="/target" 跳转时，此时浏览器中的绝对地址会以 localhost:8080 开头得到的跳转路径为 localhost:8080/target
+    使用 th 标签，加上 @{} 注解，此时 thymeleaf 会自动的为 /target 加上上下文信息，因此得到的跳转路径为 localhost:8080/springmvc/target
+-->
+<a th:href="@{/target}">跳转到target页面</a>
+
+</body>
+</html>
