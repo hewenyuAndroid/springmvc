@@ -14,5 +14,21 @@
 -->
 <a th:href="@{/target}">跳转到target页面</a>
 
+</br>
+
+<a th:href="@{/test/testSuccess}">测试@RequestMapping注解在类上的跳转</a>
+
+<br/>
+
+<form th:action="@{test/method}" method="get">
+    <input type="submit">form表单get提交</input>
+</form>
+
+</br>
+
+<form th:action="@{test/method}" method="post">
+    <input type="submit">form表单post提交</input>
+</form>
+
 </body>
 </html>

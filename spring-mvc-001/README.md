@@ -1,4 +1,3 @@
-
 # Spring MVC
 
 程序框架搭建流程
@@ -11,11 +10,13 @@
 
 > step2 增加 web 支持
 
-在模块的 `src/main` 目录下新建 `webapp` 目录。(默认是带有小蓝点的，没有的话，需要在module设置中增加web支持)。另外，在添加 web 支持的时候需要添加 `web.xml` 支持，添加时需要注意添加的路径;
+在模块的 `src/main` 目录下新建 `webapp` 目录。(默认是带有小蓝点的，没有的话，需要在module设置中增加web支持)。另外，在添加 web
+支持的时候需要添加 `web.xml` 支持，添加时需要注意添加的路径;
 
 > step3 增加 spring 支持
 
-在 `web.xml` 文件中配置 `org.springframework.web.servlet.DispatcherServlet` (SpringMVC框架内置的一个类，前端控制器)，所有的请求都应该经过这个 `DispatcherServlet`;
+在 `web.xml` 文件中配置 `org.springframework.web.servlet.DispatcherServlet` (SpringMVC框架内置的一个类，前端控制器)
+，所有的请求都应该经过这个 `DispatcherServlet`;
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -42,20 +43,23 @@
 </web-app>
 ```
 
-`DispatcherServlet` 是 `SpringMVC` 框架提供的最核心类，它是整个 `SpringMVC` 框架的前端控制器，负责接收 `HTTP` 请求、将请求路由到处理程序、处理响应信息、最终将响应返回给客户端。
+`DispatcherServlet` 是 `SpringMVC` 框架提供的最核心类，它是整个 `SpringMVC` 框架的前端控制器，负责接收 `HTTP`
+请求、将请求路由到处理程序、处理响应信息、最终将响应返回给客户端。
 
 `DispatcherServlet` 是 `Web` 应用程序的主要入口之一，主要职责包括:
 
-1. 接收客户端的 `Http` 请求: `DispatcherServlet` 监听来自 `Web` 浏览器的 http 请求，然后根据请求的 url 将请求数据解析为 `Request` 对象;
-2. 处理请求的 `URL`: `DispatcherServlet` 将请求的 `URL` 与处理程序进行匹配，确定需要调用哪个控制器 (`Controller`) 来处理这个请求;
+1. 接收客户端的 `Http` 请求: `DispatcherServlet` 监听来自 `Web` 浏览器的 http 请求，然后根据请求的 url 将请求数据解析为
+   `Request` 对象;
+2. 处理请求的 `URL`: `DispatcherServlet` 将请求的 `URL` 与处理程序进行匹配，确定需要调用哪个控制器 (`Controller`)
+   来处理这个请求;
 3. 调用响应的控制器: `DispatcherServlet` 将请求分发给找到的控制处理器，执行业务逻辑，然后返回一个模型对象 (`Model`)；
 4. 渲染视图: `DispatcherServlet` 将调用视图引擎，将模型对象呈现为用户可以看到的 `HTML` 页面;
 5. 返回响应给客户端: `DispathcerServlet` 将为用户生成的响应发送给浏览器，响应可以包括 表单，JSON，XML、HTML等;
 
-
 > step4 创建控制处理器
 
-新建一个请求处理器 [`HelloController`](./src/main/java/com/example/spring/controller/HelloController.java) ，添加 `@Controller` 注解，将该处理器交给 spring 的 ioc 容器管理;
+新建一个请求处理器 [`HelloController`](./src/main/java/com/example/spring/controller/HelloController.java) ，添加
+`@Controller` 注解，将该处理器交给 spring 的 ioc 容器管理;
 
 > step5 配置 SpringMVC 框架自己的配置文件
 
@@ -63,11 +67,99 @@
 
 该配置文件有默认的存放位置，在 `WEB-INF` 目录下;
 
-
-
 ## 总结
 
 浏览器发送请求，若请求地址符合前端控制器的 `url-pattern`，则该请求就会被前端控制器的 `DispatcherSevlet` 处理。
-前端控制器会读取 `SpringMVC` 的核心配置文件，通过扫描组件找到控制器，将请求地址和控制器中的 `@RequestMapping` 注解的 `value` 属性值进行匹配，若匹配成功，该注解所标识的控制器方法就是处理请求的方法，处理请求的方法需要返回一个字符串类型的视图名称，该视图名称会被视图解析器解析，加上前缀和后缀组成视图的路径，通过 `thymeleaf` 对视图进行渲染，最终转发到视图对应页面;
+前端控制器会读取 `SpringMVC` 的核心配置文件，通过扫描组件找到控制器，将请求地址和控制器中的 `@RequestMapping` 注解的
+`value` 属性值进行匹配，若匹配成功，该注解所标识的控制器方法就是处理请求的方法，处理请求的方法需要返回一个字符串类型的视图名称，该视图名称会被视图解析器解析，加上前缀和后缀组成视图的路径，通过
+`thymeleaf` 对视图进行渲染，最终转发到视图对应页面;
+
+# @RequestMapping 注解
+
+`@RequestMapping` 注解的作用是将请求和处理请求的控制器方法关联起来，建立映射关系。`Spring MVC`
+接收到指定的请求，通过映射关系找到对应的控制器方法来处理请求;
+
+```java
+// 可以作用在类上和方法上
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Mapping
+@Reflective({ControllerMappingReflectiveProcessor.class})
+public @interface RequestMapping {
+    String name() default "";
+
+    @AliasFor("path")
+    String[] value() default {};
+
+    @AliasFor("value")
+    String[] path() default {};
+
+    RequestMethod[] method() default {};
+
+    String[] params() default {};
+
+    String[] headers() default {};
+
+    String[] consumes() default {};
+
+    String[] produces() default {};
+}
+```
+
+## `@RequestMapping` 注解位置
+
+- 作用在类上: 设置映射请求的请求路径的初始信息;
+- 作用在方法上: 设置映射请求请求路径的具体信息;
+
+```java
+
+@Controller
+@RequestMapping("/test")
+public class TestRequestMappingController {
+
+    /**
+     * 由于 @RequestMapping 注解在类上有配置，因此，资源的 URI 为 /springmvc/test/testSuccess.html
+     */
+    @RequestMapping("/testSuccess")
+    public String testSuccess() {
+        return "testSuccess";
+    }
+}
+```
+
+## `@RequestMapping` 注解的 `value` 属性
+
+`@RequestMapping` 注解的 `value` 属性通过请求的请求地址匹配请求映射;
+
+`@RequestMapping` 注解的`value` 属性是一个字符串类型的数组，表示该请求映射能够匹配多个请求地址所对应的请求;
+
+`@RequestMapping` 注解的 `value` 属性必须设置，至少通过请求地址匹配请求映射;
+
+```java
+/**
+ * @RequestMapping.value 属性能够配置多个 uri，表示多个uri访问的是同一个资源
+ */
+@RequestMapping(
+        value = {"/test", "/test2"}
+)
+public String testMappingValue() {
+    return "testSuccess";
+}
+```
+
+## `@RequestMapping` 注解的method属性
+
+`@RequestMapping` 注解的method属性通过请求的请求方式（get或post）匹配请求映射
+
+`@RequestMapping` 注解的method属性是一个`RequestMethod` 类型的数组，表示该请求映射能够匹配多种请求方式的请求
+
+若当前请求的请求地址满足请求映射的 `value` 属性，但是请求方式不满足`method`属性，则浏览器报错
+`405：Request method 'POST' not supported`;
+
+如果没有填写 `method` 属性，则 `get` `post` 请求方式都可以访问;
+
+
+
 
 
