@@ -1,6 +1,7 @@
 package com.example.spring.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,6 +29,12 @@ public class TestRequestMappingController {
 
     @RequestMapping(value = "/method", method = RequestMethod.GET)
     public String testMethod() {
+        return "testSuccess";
+    }
+
+    @RequestMapping("/save/{userId}/{username}")
+    public String testPathVariable(@PathVariable("userId") String userId, @PathVariable("username") String username) {
+        System.out.println("userId = " + userId + ", username = " + username);
         return "testSuccess";
     }
 

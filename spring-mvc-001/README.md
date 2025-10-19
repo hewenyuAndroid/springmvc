@@ -160,6 +160,23 @@ public String testMappingValue() {
 如果没有填写 `method` 属性，则 `get` `post` 请求方式都可以访问;
 
 
+## 路径参数
+
+原始方式：/deleteUser?id=1
+
+rest方式：/deleteUser/1
+
+`SpringMVC` 路径中的占位符常用于 `RESTful` 风格中，当请求路径中将某些数据通过路径的方式传输到服务器中，就可以在相应的@RequestMapping注解的value属性中通过占位符{xxx}表示传输的数据，在通过 `@PathVariable` 注解，将占位符所表示的数据赋值给控制器方法的形参
+
+```java
+@RequestMapping("/save/{userId}/{username}")
+public String testPathVariable(@PathVariable("userId") String userId, @PathVariable("username") String username) {
+  System.out.println("userId = " + userId + ", username = " + username);
+  return "testSuccess";
+}
+```
+
+
 
 
 
