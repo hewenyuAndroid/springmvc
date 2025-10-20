@@ -196,11 +196,25 @@ public String useServletApi(HttpServletRequest request) {
 
 在控制器方法的形参位置，设置和请求参数同名的形参，当浏览器发送请求，匹配到请求映射时，在 `DispatcherServlet` 中就会将请求参数赋值给相应的形参;
 
+若请求参数中出现多个同名的请求参数，可以在形参位置设置字符串类型或字符串数组类型接收此参数，若使用字符串类型参数接收同名参数，则 `spring` 会使用 `,` 拼接多个同名的参数 
+
 ```java
 @RequestMapping("/use_method_param")
 public String useMethodParam(@RequestParam("username") String username, @RequestParam("password") String password) {
    System.out.println("username: " + username + " password: " + password);
    return "testSuccess";
+}
+
+@RequestMapping("/use_method_param")
+public String useMethodParam(@RequestParam("username") String username, @RequestParam("class") String clazz) {
+    // 假设 clazz 有多个同名的参数，则会使用 , 拼接，例如: java,c++,go
+    return "testSuccess";
+}
+
+@RequestMapping("/use_method_param")
+public String useMethodParam(@RequestParam("username") String username, @RequestParam("class") String[] clazz) {
+    // 也可以使用字符串数组接收
+    return "testSuccess";
 }
 ```
 
@@ -220,6 +234,22 @@ public String useMethodParam(@RequestParam("username") String username, @Request
 
 
 ## `@CookieValue`
+
+`@CookieValue` 是将`cookie`数据和控制器方法的形参创建映射关系；
+`@CookieValue`注解一共有三个属性：`value`、`required`、`defaultValue`，用法同`@RequestParam`;
+
+
+## 通过 `POJO` 获取请求参数
+
+可以在控制器方法的形参位置设置一个实体类类型的形参，此时若浏览器传输的请求参数的参数名和实体类中的属性名一致，那么请求参数就会为此属性赋值
+
+```java
+@RequestMapping("/use_pojo")
+public String usePojo(User user) {
+    System.out.println("user: " + user);
+    return "testSuccess";
+}
+```
 
 
 

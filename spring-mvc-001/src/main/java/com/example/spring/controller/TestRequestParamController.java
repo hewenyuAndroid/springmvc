@@ -1,5 +1,6 @@
 package com.example.spring.controller;
 
+import com.example.spring.controller.pojo.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,12 @@ public class TestRequestParamController {
     @RequestMapping("/use_method_param")
     public String useMethodParam(@RequestParam("username") String username, @RequestParam("password") String password) {
         System.out.println("username: " + username + " password: " + password);
+        return "testSuccess";
+    }
+
+    @RequestMapping("/use_pojo")
+    public String usePojo(User user) {
+        System.out.println("user: " + user);
         return "testSuccess";
     }
 
