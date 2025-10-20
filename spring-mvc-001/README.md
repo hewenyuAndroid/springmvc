@@ -176,6 +176,50 @@ public String testPathVariable(@PathVariable("userId") String userId, @PathVaria
 }
 ```
 
+# `SpringMVC` 获取请求参数
+
+## 通过 `ServletAPI` 获取
+
+将HttpServletRequest作为控制器方法的形参，此时HttpServletRequest类型的参数表示封装了当前请求的请求报文的对象;
+
+```java
+@RequestMapping("/use_servlet_api")
+public String useServletApi(HttpServletRequest request) {
+  String username = (String) request.getParameter("username");
+  String password = (String) request.getParameter("password");
+  System.out.println("username: " + username + " password: " + password);
+  return "testSuccess";
+}
+```
+
+## 通过控制器方法的形参获取
+
+在控制器方法的形参位置，设置和请求参数同名的形参，当浏览器发送请求，匹配到请求映射时，在 `DispatcherServlet` 中就会将请求参数赋值给相应的形参;
+
+```java
+@RequestMapping("/use_method_param")
+public String useMethodParam(@RequestParam("username") String username, @RequestParam("password") String password) {
+   System.out.println("username: " + username + " password: " + password);
+   return "testSuccess";
+}
+```
+
+`@RequestParam` 是将请求参数和控制器方法的形参创建映射关系，`@RequestParam`注解一共有三个属性：
+
+- `value`：指定为形参赋值的请求参数的参数名;
+- `required`：设置是否必须传输此请求参数;
+  - 若设置为`true`时  (默认值为`true`)，则当前请求必须传输value所指定的请求参数，若没有传输该请求参数，且没有设置defaultValue属性，则页面报错 `400：Required String parameter 'xxx' is not present`;
+  - 若设置为`false`，则当前请求不是必须传输`value`所指定的请求参数，若没有传输，则注解所标识的形参的值为null;
+- `defaultValue`：不管 `required` 属性值为 `true`或`false`，当`value`所指定的请求参数没有传输或传输的值为""时，则使用默认值为形参赋值;
+
+
+## `@RequestHeader`
+
+`@RequestHeader` 是将请求头信息和控制器方法的形参创建映射关系;
+`@RequestHeader` 注解一共有三个属性：`value`、`required`、`defaultValue`，用法同`@RequestParam`;
+
+
+## `@CookieValue`
 
 
 

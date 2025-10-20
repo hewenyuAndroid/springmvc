@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringMVC请求参数case</title>
+</head>
+<body>
+
+<form th:action="@{/reqParam/use_servlet_api}" method="get">
+    <!-- 常规表单字段 -->
+    <input type="text" name="username"/></br>
+    <input type="password" name="password"/></br>
+    <input type="submit" value="使用ServletAPI HttpServletRequest 对象接收"/>
+</form>
+
+</br>
+
+<form th:action="@{/reqParam/use_method_param}" method="post">
+    <!-- 常规表单字段 -->
+    <input type="text" name="username"/></br>
+    <input type="password" name="password"/></br>
+    <input type="submit" value="使用控制器方法形参接收"/>
+</form>
+
+</body>
+</html>
